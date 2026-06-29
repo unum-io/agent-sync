@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agent-sync"
+version = "0.1.0"
+description = "Sync AI agent instructions from .ai/ to Cursor, Copilot, Claude, Gemini, and more"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [{ name = "Resolve", email = "developers@unum.ai" }]
+keywords = ["ai", "cursor", "copilot", "claude", "agents", "instructions"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Build Tools",
+]
+dependencies = []
+
+[project.scripts]
+agent-sync = "agent_sync.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/unum-io/agent-sync"
+Repository = "https://github.com/unum-io/agent-sync"
+Issues = "https://github.com/unum-io/agent-sync/issues"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent_sync"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/examples",
+    "/README.md",
+    "/LICENSE",
+    "/CONTRIBUTING.md",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

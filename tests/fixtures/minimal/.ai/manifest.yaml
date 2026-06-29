@@ -1,0 +1,17 @@
+# Manifest for tests
+
+instructions:
+  - name: general
+    file: instructions/general.md
+    description: "Core directives"
+    always_apply: true
+
+  - name: python
+    file: instructions/python.md
+    description: "Python standards"
+    globs: "**/*.py"
+
+commands:
+  - name: review
+    file: commands/review.md
+    description: "Code review command"

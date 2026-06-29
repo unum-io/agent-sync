@@ -1,0 +1,8 @@
+#!/bin/sh
+# post-merge hook: warn if AI agent instructions are out of sync after pull/merge.
+
+if command -v agent-sync >/dev/null 2>&1; then
+  agent-sync --check || true
+elif command -v python3 >/dev/null 2>&1; then
+  python3 -m agent_sync --check || true
+fi
