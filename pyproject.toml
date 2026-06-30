@@ -9,7 +9,7 @@ description = "Sync AI agent instructions from .ai/ to Cursor, Copilot, Claude, 
 readme = "README.md"
 license = "Apache-2.0"
 requires-python = ">=3.10"
-authors = [{ name = "Resolve", email = "developers@unum.ai" }]
+authors = [{ name = "Resolve", email = "api@resolve.tech" }]
 keywords = ["ai", "cursor", "copilot", "claude", "agents", "instructions"]
 classifiers = [
     "Development Status :: 4 - Beta",
