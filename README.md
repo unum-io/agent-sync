@@ -7,14 +7,6 @@ Write instructions once. Run one command. Get output for **Cursor**, **GitHub Co
 ## Install
 
 ```bash
-pip install git+https://github.com/unum-io/agent-sync.git
-# or
-uv tool install git+https://github.com/unum-io/agent-sync.git
-```
-
-Or clone and install locally:
-
-```bash
 git clone https://github.com/unum-io/agent-sync.git
 cd agent-sync
 pip install -e .
