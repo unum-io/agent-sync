@@ -14,7 +14,7 @@ def test_defaults_without_config(tmp_path: Path):
 def test_loads_project_name(tmp_path: Path):
     ai = tmp_path / ".ai"
     ai.mkdir()
-    (ai / "config.yaml").write_text("project_name: MyApp\n")
+    (ai / "config.toml").write_text('project_name = "MyApp"\n')
     cfg = load_config(tmp_path)
     assert cfg.project_name == "MyApp"
 
@@ -22,11 +22,19 @@ def test_loads_project_name(tmp_path: Path):
 def test_watcher_ignore_override(tmp_path: Path):
     ai = tmp_path / ".ai"
     ai.mkdir()
-    (ai / "config.yaml").write_text(
-        "opencode:\n  watcher_ignore:\n    - bazel-*\n    - node_modules/**\n"
+    (ai / "config.toml").write_text(
+        '[opencode]\nwatcher_ignore = ["bazel-*", "node_modules/**"]\n'
     )
     cfg = load_config(tmp_path)
     assert cfg.opencode_watcher_ignore == ["bazel-*", "node_modules/**"]
+
+
+def test_frameworks_subset(tmp_path: Path):
+    ai = tmp_path / ".ai"
+    ai.mkdir()
+    (ai / "config.toml").write_text('frameworks = ["claude", "cursor"]\n')
+    cfg = load_config(tmp_path)
+    assert cfg.frameworks == frozenset({"claude", "cursor"})
 
 
 def test_format_opencode_json():

@@ -79,7 +79,7 @@ def main(argv: list[str] | None = None) -> None:
         sys.exit(result)
 
     ai_dir = repo_root / args.source_dir
-    print(f"Syncing from {ai_dir / 'manifest.yaml'} ...")
+    print(f"Syncing from {ai_dir / 'manifest.toml'} ...")
     print(f"Repo root: {repo_root}")
     if args.dry_run:
         print("DRY-RUN MODE — no files will be written\n")

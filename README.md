@@ -14,7 +14,7 @@ pip install -e .
 uv tool install .
 ```
 
-Requires Python 3.10+. No runtime dependencies (stdlib only).
+Requires Python 3.11+. No runtime dependencies (stdlib only, uses `tomllib`).
 
 ## Quick start
 
@@ -22,12 +22,12 @@ Requires Python 3.10+. No runtime dependencies (stdlib only).
 # 1. Add source files
 mkdir -p .ai/instructions .ai/commands
 
-cat > .ai/manifest.yaml <<'EOF'
-instructions:
-  - name: general
-    file: instructions/general.md
-    description: "Core directives"
-    always_apply: true
+cat > .ai/manifest.toml <<'EOF'
+[[instructions]]
+name = "general"
+file = "instructions/general.md"
+description = "Core directives"
+always_apply = true
 EOF
 
 cat > .ai/instructions/general.md <<'EOF'
@@ -48,16 +48,20 @@ See [examples/minimal/](examples/minimal/) for a complete example.
 
 ## Configuration
 
-Optional `.ai/config.yaml`:
+Optional `.ai/config.toml`:
 
-```yaml
-project_name: MyApp
-frameworks: [copilot, cursor, claude, gemini, continue, opencode, kilo, antigravity]
-opencode:
-  watcher_ignore:
-    - node_modules/**
-    - dist/**
+```toml
+project_name = "MyApp"
+frameworks = ["copilot", "cursor", "claude", "gemini", "continue", "opencode", "kilo", "antigravity"]
+
+[opencode]
+watcher_ignore = ["node_modules/**", "dist/**"]
 ```
+
+> **Migrating from YAML:** earlier versions read `manifest.yaml` / `config.yaml`.
+> These are no longer supported; agent-sync exits with an error if it finds them.
+> Rewrite each list item under `instructions:` / `commands:` as an
+> `[[instructions]]` / `[[commands]]` table with quoted string values.
 
 | Field | Default | Description |
 |-------|---------|-------------|
