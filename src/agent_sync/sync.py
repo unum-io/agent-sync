@@ -12,7 +12,7 @@ from agent_sync.generators import (
     SCRIPT_DEST_FRAMEWORKS,
 )
 from agent_sync.generators._helpers import SyncContext
-from agent_sync.parser import parse_yaml
+from agent_sync.parser import load_toml, reject_legacy_yaml
 
 KILO_JSON_CONTENT = """{
   "$schema": "https://app.kilo.ai/config.json",
@@ -32,19 +32,20 @@ def sync(
     config: SyncConfig | None = None,
 ) -> list[Path] | int:
     """
-    Read manifest.yaml and generate all framework files.
+    Read manifest.toml and generate all framework files.
 
     Returns list of written paths, or if check=True, exit code (0 = in sync, 1 = out of sync).
     """
     cfg = config or load_config(repo_root, source_dir or ".ai")
     ai_dir = repo_root / cfg.source_dir
-    manifest_path = ai_dir / "manifest.yaml"
+    reject_legacy_yaml(ai_dir)
+    manifest_path = ai_dir / "manifest.toml"
 
     if not manifest_path.exists():
         print(f"ERROR: {manifest_path} not found", file=sys.stderr)
         sys.exit(1)
 
-    manifest = parse_yaml(manifest_path.read_text())
+    manifest = load_toml(manifest_path)
     ctx = SyncContext(
         repo_root=repo_root,
         source_prefix=cfg.source_dir,
